@@ -1,0 +1,76 @@
+esphome:
+  name: dual-foc-controller
+  friendly_name: Dual FOC Controller
+  includes:
+    - foc_controller.h
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+logger:
+
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: "YOUR_WIFI"
+  password: "YOUR_PASSWORD"
+
+  ap:
+    ssid: "DualFOCFallback"
+    password: "12345678"
+
+captive_portal:
+
+globals:
+  - id: foc_controller
+    type: FOCController*
+
+custom_component:
+  - lambda: |-
+      auto foc = new FOCController();
+      id(foc_controller) = foc;
+      App.register_component(foc);
+      return {foc};
+
+number:
+  - platform: template
+    name: "Motor 1 Speed"
+    id: motor1_speed
+    optimistic: true
+    min_value: -20
+    max_value: 20
+    step: 0.1
+    set_action:
+      then:
+        - lambda: |-
+            id(foc_controller)->set_motor1_speed(x);
+
+  - platform: template
+    name: "Motor 2 Speed"
+    id: motor2_speed
+    optimistic: true
+    min_value: -20
+    max_value: 20
+    step: 0.1
+    set_action:
+      then:
+        - lambda: |-
+            id(foc_controller)->set_motor2_speed(x);
+
+switch:
+  - platform: template
+    name: "Motor Enable"
+    optimistic: true
+
+    turn_on_action:
+      - lambda: |-
+          id(foc_controller)->enable();
+
+    turn_off_action:
+      - lambda: |-
+          id(foc_controller)->disable();
