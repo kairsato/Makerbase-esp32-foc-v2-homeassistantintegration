@@ -17,6 +17,12 @@ class MakerbaseFOCFan : public Component, public fan::Fan {
  public:
   void set_parent(MakerbaseFOC *parent) { this->parent_ = parent; }
 
+  void setup() override {
+    this->state = false;
+    this->speed = 0;
+    this->publish_state();
+  }
+
   fan::FanTraits get_traits() override {
     auto traits = fan::FanTraits();
     traits.set_speed(true);
