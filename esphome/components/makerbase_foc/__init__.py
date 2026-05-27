@@ -8,7 +8,7 @@ DEPENDENCIES = []
 makerbase_foc_ns = cg.esphome_ns.namespace("makerbase_foc")
 MakerbaseFOCFan = makerbase_foc_ns.class_("MakerbaseFOCFan", fan.Fan, cg.Component)
 
-CONFIG_SCHEMA = fan.FAN_SCHEMA.extend({
+CONFIG_SCHEMA = fan.fan_schema(MakerbaseFOCFan).extend({
     cv.GenerateID(): cv.declare_id(MakerbaseFOCFan),
 }).extend(cv.COMPONENT_SCHEMA)
 
