@@ -15,6 +15,6 @@ CONFIG_SCHEMA = cv.Schema({
 async def to_code(config):
     cg.add_library("SPI", None)
     cg.add_library("Wire", None)
-    cg.add_library("Simple FOC", "2.3.3")
+    cg.add_library("askuber/Simple FOC", "2.3.4")
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
