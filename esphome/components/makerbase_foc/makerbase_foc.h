@@ -27,8 +27,8 @@ class MakerbaseFOC : public Component {
   InlineCurrentSense current_sense1_{0.01f, 50.0f, 39, 36};
   InlineCurrentSense current_sense2_{0.01f, 50.0f, 35, 34};
 
-  float target1_ = 0, target2_ = 0;
-  bool enabled1_ = false, enabled2_ = false;
+  float target1_ =  5.0f, target2_ =  5.0f;
+  bool enabled1_ = true, enabled2_ = true;
 
   float get_vin_volt() {
     return analogReadMilliVolts(13) * 8.5f / 1000.0f;
